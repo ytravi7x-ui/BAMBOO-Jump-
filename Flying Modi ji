@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Modi Ji Jump - Level, Store & Lucky Spin Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- =========================================================================
+     [AD SLOT 1: GOOGLE ADSENSE / ADSTERRA GLOBAL SCRIPTS]
+     Yahan apna AdSense Script ya Adsterra Popunder/Social Bar Script paste karein:
+     Example:
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXX" crossorigin="anonymous"></script>
+     OR
+     <script type='text/javascript' src='//your-adsterra-script.js'></script>
+========================================================================= -->
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
+body, html { width: 100%; height: 100%; overflow: hidden; background: #05080f; touch-action: manipulation; font-family: 'Poppins', sans-serif; color: #fff; }
+
+/* Screens Layout */
+.screen { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: space-between; padding: 18px; z-index: 10; background: radial-gradient(100% 100% at 50% 0%, #162032 0%, #0f172a 100%); }
+.screen.active { display: flex; }
+
+/* Top Bars & Glass Elements */
+.top-bar { width: 100%; max-width: 440px; padding: 12px 16px; text-align: center; font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 900; background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+.glass-pill { padding: 6px 12px; border-radius: 99px; background: rgba(0, 242, 254, 0.12); border: 1px solid rgba(0, 242, 254, 0.3); font-size: 12px; font-weight: 800; color: #00f2fe; display: flex; align-items: center; gap: 5px; }
+.coin-pill { background: rgba(241, 196, 15, 0.15); border-color: rgba(241, 196, 15, 0.3); color: #f1c40f; }
+
+/* Main Card Containers */
+.card-box { width: 100%; max-width: 440px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)); border-radius: 28px; padding: 20px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.12); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 20px 60px rgba(0,0,0,0.5); overflow-y: auto; max-height: calc(100vh - 170px); }
+
+/* Buttons */
+.btn-container { width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 10px; }
+.game-btn { width: 100%; padding: 15px; background: linear-gradient(180deg, #ffc93c, #f39c12 60%, #e67e22); border: none; border-radius: 16px; color: #fff; font-size: 15px; font-weight: 900; cursor: pointer; box-shadow: 0 4px 0 #a35d14; transition: transform 0.1s, filter 0.2s; font-family: 'Outfit', sans-serif; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; gap: 8px; }
+.game-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #a35d14; }
+.game-btn.secondary { background: linear-gradient(180deg, #00f2fe, #4facfe); box-shadow: 0 4px 0 #008eb0; }
+.game-btn.purple { background: linear-gradient(180deg, #a855f7, #6366f1); box-shadow: 0 4px 0 #4338ca; }
+.game-btn:disabled { background: #475569 !important; box-shadow: 0 4px 0 #1e293b !important; opacity: 0.6; cursor: not-allowed; }
+.back-btn { width: 100%; padding: 12px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px; color: #fff; font-weight: 800; cursor: pointer; backdrop-filter: blur(10px); }
+
+/* Avatar Preview in Menu */
+.avatar-preview { width: 124px; height: 124px; border-radius: 50%; margin: 14px auto; border: 4px solid #00f2fe; box-shadow: 0 0 30px rgba(0,242,254,0.5); overflow: hidden; background: rgba(0,0,0,0.4); position: relative; animation: floatAnim 2.2s ease-in-out infinite; }
+.avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Level Selection Grid */
+.level-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 10px; }
+.level-card { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 18px; padding: 14px 8px; text-align: center; position: relative; cursor: pointer; backdrop-filter: blur(10px); transition: transform 0.1s; }
+.level-card:active { transform: scale(0.96); }
+.level-card.locked { opacity: 0.38; cursor: not-allowed; }
+.level-card .lvl-num { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 900; }
+.level-card .lvl-target { font-size: 10px; color: #cbd5e1; margin-top: 2px; }
+.level-card .lvl-high { font-size: 10px; color: #00f2fe; font-weight: 700; margin-top: 2px; }
+.level-card .lvl-badge { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; background: #22c55e; border-radius: 50%; font-size: 11px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+
+/* Store Grid */
+.store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.skin-card { background: rgba(255, 255, 255, 0.05); border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px; display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; text-align: center; }
+.skin-card.equipped { border-color: #00f2fe; background: rgba(0, 242, 254, 0.1); box-shadow: 0 0 18px rgba(0,242,254,0.25); }
+.skin-img { width: 78px; height: 78px; border-radius: 16px; object-fit: cover; background: rgba(0,0,0,0.35); border: 2px solid rgba(255,255,255,0.15); }
+.skin-title { font-size: 13px; font-weight: 800; font-family: 'Outfit', sans-serif; }
+.skin-desc { font-size: 9px; color: #94a3b8; font-style: italic; line-height: 1.2; height: 22px; overflow: hidden; }
+.skin-price { font-size: 11px; font-weight: 800; color: #f1c40f; display: flex; align-items: center; gap: 3px; }
+
+/* Lucky Spin Wheel */
+.wheel-wrapper { position: relative; width: 260px; height: 260px; margin: 12px auto; display: flex; justify-content: center; align-items: center; }
+#wheelCanvas { width: 100%; height: 100%; border-radius: 50%; border: 4px solid #00f2fe; box-shadow: 0 0 30px rgba(0,242,254,0.4); }
+.pointer { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 14px solid transparent; border-right: 14px solid transparent; border-top: 26px solid #ff4757; z-index: 10; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.7)); }
+.center-cap { position: absolute; width: 44px; height: 44px; background: radial-gradient(circle, #f39c12, #d35400); border-radius: 50%; border: 3px solid #fff; z-index: 5; display: flex; justify-content: center; align-items: center; font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 11px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); color: #fff; }
+
+/* In-Game HUD & Viewport */
+#gameScreen { display: none; position: fixed; inset: 0; background: #05080f; justify-content: center; align-items: center; z-index: 100; }
+#game-container { position: relative; width: 100%; max-width: 440px; height: 100dvh; max-height: 840px; background: #0b1329; overflow: hidden; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
+canvas#gameCanvas { display: block; width: 100%; height: 100%; cursor: pointer; }
+
+#ui-layer { position: absolute; inset: 0; pointer-events: none; display: flex; flex-direction: column; align-items: center; z-index: 15; }
+.top-hud { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 12px 14px 0; pointer-events: auto; }
+.hud-glass { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 6px 12px; color: #fff; font-size: 12px; font-weight: 800; display: flex; align-items: center; gap: 5px; }
+
+.hud-progress-wrap { width: 75%; margin-top: 8px; background: rgba(0,0,0,0.6); padding: 3px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); }
+.hud-progress-fill { height: 8px; width: 0%; background: linear-gradient(90deg, #22c55e, #00f2fe, #a855f7); border-radius: 10px; transition: width 0.2s ease; }
+
+#score-board { font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 900; color: #fff; margin-top: 4px; text-shadow: 0 0 15px rgba(0,242,254,0.8); transition: transform 0.1s ease; }
+#score-board.pop { transform: scale(1.22); }
+
+/* Overlays / Modals */
+.glass-box { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); padding: 24px; border-radius: 28px; width: 85%; max-width: 330px; text-align: center; pointer-events: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.6); color: #0f172a; }
+.modal-stat-box { margin: 12px 0; padding: 10px 14px; background: #f1f5f9; border-radius: 16px; font-size: 13px; font-weight: 700; color: #334155; }
+.modal-stat-row { display: flex; justify-content: space-between; align-items: center; margin: 4px 0; }
+
+.modal { display: none; position: fixed; inset: 0; background: rgba(5, 8, 15, 0.92); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 999; justify-content: center; align-items: center; flex-direction: column; padding: 20px; text-align: center; }
+
+/* Ad Containers */
+.ad-banner-slot { width: 100%; max-width: 440px; margin: 8px 0; display: flex; justify-content: center; align-items: center; min-height: 50px; background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.15); border-radius: 12px; font-size: 10px; color: #94a3b8; }
+
+/* Toast Notification */
+#toast-notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 242, 254, 0.5); color: #e0f2fe; padding: 10px 22px; border-radius: 99px; font-size: 12px; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.6); display: none; }
+
+@keyframes floatAnim { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes completePop { 0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
+.pop-anim { animation: completePop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+</style>
+</head>
+<body>
+
+<div id="toast-notification">Notification</div>
+
+<!-- ==================== SCREEN 1: LOADER ==================== -->
+<div id="loadingScreen" class="screen active" style="z-index: 9999; background: radial-gradient(120% 120% at 50% 20%, #1e3a5f 0%, #0f172a 60%, #05080f 100%);">
+  <div class="avatar-preview" style="width: 105px; height: 105px; border-radius: 28px;">
+    <img id="preload-logo" src="https://files.catbox.moe/2ibjka.png" alt="Logo">
+  </div>
+  <div style="font-family:'Outfit',sans-serif; font-weight:900; font-size:26px; margin-top:14px; text-shadow:0 0 20px rgba(0,242,254,0.8);">
+    FLYING MODI JI
+  </div>
+  <div style="font-size:11px; color:#00f2fe; font-weight:700; letter-spacing:1px; margin-top:2px;">
+    LEVEL, STORE & LUCKY SPIN EDITION
+  </div>
+
+  <div style="width:260px; margin-top:24px;">
+    <div style="width:100%; height:12px; background:rgba(255,255,255,0.1); border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,0.2);">
+      <div id="load-progress-bar" style="height:100%; width:0%; background:linear-gradient(90deg, #00f2fe, #4facfe, #f1c40f); border-radius:20px; box-shadow:0 0 15px #00f2fe; transition:width 0.1s ease;"></div>
+    </div>
+    <div style="display:flex; justify-content:space-between; font-size:10px; color:#94a3b8; font-family:monospace; margin-top:6px;">
+      <span>PRELOADING ASSETS</span>
+      <span id="load-text">0%</span>
+    </div>
+  </div>
+
+  <button onclick="finishLoading()" style="margin-top:20px; padding:8px 20px; border-radius:99px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.1); color:#fff; font-size:11px; font-weight:700; cursor:pointer;">
+    START GAME
+  </button>
+</div>
+
+<!-- ==================== SCREEN 2: MAIN MENU ==================== -->
+<div id="screen-menu" class="screen">
+  <div class="top-bar">
+    <span>MODI JI JUMP</span>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="glass-pill coin-pill">🪙 <span class="global-coin-val">0</span></span>
+      <button onclick="toggleAudio()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:50%; width:32px; height:32px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+        <span id="audio-btn-icon">🔊</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card-box">
+    <div style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:900; color:#00f2fe;">BAMBOO VALLEY ROYALE</div>
+    <div style="font-size:11px; opacity:0.75; margin-top:2px;">Select hero, fly high & unlock levels!</div>
+
+    <div class="avatar-preview">
+      <img id="menu-avatar-img" src="https://files.catbox.moe/2ibjka.png" alt="Equipped Hero">
+    </div>
+    <div id="menu-avatar-name" style="font-family:'Outfit',sans-serif; font-size:18px; font-weight:900; color:#f1c40f;">Modi Ji</div>
+    <div id="menu-avatar-desc" style="font-size:10px; color:#94a3b8; font-style:italic; margin-top:2px; height:16px;">"The visionary leader"</div>
+
+    <div style="display:flex; justify-content:space-around; margin-top:16px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.1); font-size:12px;">
+      <div>
+        <div style="font-size:10px; color:#94a3b8;">CURRENT LEVEL</div>
+        <div id="menu-current-lvl" style="font-family:'Outfit'; font-weight:900; color:#00f2fe; font-size:16px;">LVL 1</div>
+      </div>
+      <div style="width:1px; background:rgba(255,255,255,0.1);"></div>
+      <div>
+        <div style="font-size:10px; color:#94a3b8;">BEST HIGH SCORE</div>
+        <div id="menu-high-score" style="font-family:'Outfit'; font-weight:900; color:#f1c40f; font-size:16px;">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       [AD SLOT 2: MAIN MENU BANNER AD (320x50 or 300x250)]
+       Paste your Adsterra Banner or Google AdSense Responsive Display Unit here
+  ========================================================================= -->
+  <div class="ad-banner-slot" id="main-menu-ad-slot">
+    <!-- Paste Banner Ad Code Here -->
+    <span>[Adsterra / AdSense Banner Ad Slot (320x50)]</span>
+  </div>
+
+  <div class="btn-container">
+    <button class="game-btn" onclick="openGameScreen(saveData.unlockedLevel)">PLAY CURRENT LEVEL 🚀</button>
+    <button class="game-btn secondary" onclick="showScreen('screen-levels')">SELECT LEVEL 🏆</button>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+      <button class="game-btn" style="background:linear-gradient(180deg,#10b981,#059669); box-shadow:0 4px 0 #047857;" onclick="showScreen('screen-store')">STORE (5 SKINS) 🛍️</button>
+      <button class="game-btn purple" onclick="showScreen('screen-spin')">LUCKY SPIN (<span id="menu-spins-val">5</span>/5) 🎡</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 3: LEVEL SELECT ==================== -->
+<div id="screen-levels" class="screen">
+  <div class="top-bar">
+    <button class="glass-pill" style="cursor:pointer;" onclick="showScreen('screen-menu')">← BACK</button>
+    <span>SELECT LEVEL</span>
+    <span class="glass-pill coin-pill">🪙 <span class="global-coin-val">0</span></span>
+  </div>
+
+  <div class="card-box">
+    <div style="font-size:12px; color:#00f2fe; font-weight:700; margin-bottom:8px;">REACH TARGET SCORE TO UNLOCK NEXT LEVEL</div>
+    <div class="level-grid" id="level-grid-container"></div>
+  </div>
+
+  <div class="btn-container">
+    <button class="back-btn" onclick="showScreen('screen-menu')">BACK TO MAIN MENU</button>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 4: CHARACTER STORE ==================== -->
+<div id="screen-store" class="screen">
+  <div class="top-bar">
+    <button class="glass-pill" style="cursor:pointer;" onclick="showScreen('screen-menu')">← BACK</button>
+    <span>CHARACTER STORE</span>
+    <span class="glass-pill coin-pill">🪙 <span class="global-coin-val">0</span></span>
+  </div>
+
+  <div class="card-box">
+    <div style="font-family:'Outfit'; font-size:18px; font-weight:900; color:#00f2fe;">SELECT YOUR HERO</div>
+    <div style="font-size:11px; opacity:0.8; margin-top:2px;">Coins collected in game are directly added here!</div>
+    <div class="store-grid" id="store-grid-container"></div>
+  </div>
+
+  <div class="btn-container">
+    <button class="back-btn" onclick="showScreen('screen-menu')">BACK TO MAIN MENU</button>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 5: DAILY LUCKY SPIN ==================== -->
+<div id="screen-spin" class="screen">
+  <div class="top-bar">
+    <button class="glass-pill" style="cursor:pointer;" onclick="showScreen('screen-menu')">← BACK</button>
+    <span>DAILY LUCKY SPIN</span>
+    <span class="glass-pill coin-pill">🪙 <span class="global-coin-val">0</span></span>
+  </div>
+
+  <div class="card-box">
+    <div style="font-family:'Outfit'; font-size:20px; font-weight:900; color:#00f2fe;">LUCKY REWARD WHEEL</div>
+    <div style="font-size:11px; opacity:0.8; margin-top:2px;">Watch a short video ad to spin & win daily items!</div>
+    <div style="margin-top:6px; display:inline-block; padding:4px 12px; background:rgba(255,255,255,0.1); border-radius:99px; font-size:11px; font-weight:700;">
+      Daily Spins Left: <b id="spins-left-text" style="color:#f1c40f;">5/5</b>
+    </div>
+
+    <div class="wheel-wrapper">
+      <div class="pointer"></div>
+      <div class="center-cap">SPIN</div>
+      <canvas id="wheelCanvas" width="280" height="280"></canvas>
+    </div>
+
+    <div style="display:flex; justify-content:center; gap:12px; font-size:11px; margin-top:8px;">
+      <span class="glass-pill" style="color:#ff6b81; border-color:rgba(255,107,129,0.3);">❤️ Extra Lives: <b id="spin-extra-lives-val">0</b></span>
+      <span class="glass-pill" style="color:#a855f7; border-color:rgba(168,85,247,0.3);">🛡️ Shield: <b id="spin-shield-val">None</b></span>
+    </div>
+  </div>
+
+  <div class="btn-container">
+    <button class="game-btn purple" id="spin-action-btn" onclick="watchAdAndSpin()">WATCH AD & SPIN (5s) 🎬</button>
+    <button class="back-btn" onclick="showScreen('screen-menu')">BACK TO MENU</button>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 6: IN-GAME CANVAS & HUD ==================== -->
+<div id="gameScreen">
+  <div id="game-container">
+    <canvas id="gameCanvas"></canvas>
+    <div id="ui-layer">
+      <div class="top-hud">
+        <div class="hud-glass"><span id="weather-label">DAY</span></div>
+        <div class="hud-glass"><span id="hud-level-title">LVL 1</span></div>
+        <div style="display:flex; gap:6px;">
+          <div class="hud-glass" style="color:#f1c40f;">🪙 <span id="hud-coin-count">0</span></div>
+          <div class="hud-glass" style="color:#ff4757;">❤️ <span id="hud-lives-count">3</span></div>
+          <button onclick="toggleAudio()" style="background:rgba(15,23,42,0.65); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:14px; padding:0 8px; cursor:pointer;">
+            <span id="game-audio-icon">🔊</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hud-progress-wrap">
+        <div class="hud-progress-fill" id="hud-progress-bar"></div>
+      </div>
+
+      <div id="score-board">SCORE: 0 / 10</div>
+
+      <!-- ANIMATED LEVEL STARTING COUNTDOWN OVERLAY (3-2-1-GO) -->
+      <div id="level-countdown-overlay" style="display:none; position:absolute; inset:0; z-index:40; background:rgba(0,0,0,0.65); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); flex-direction:column; align-items:center; justify-content:center; pointer-events:none;">
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <span class="glass-pill" style="font-size:12px; margin-bottom:16px; padding:6px 16px; letter-spacing:1px; color:#00f2fe; border-color:rgba(0,242,254,0.4);">
+            <span id="countdown-lvl-badge">LEVEL 1 STARTING</span>
+          </span>
+          <div id="countdown-number" class="pop-anim" style="font-family:'Outfit',sans-serif; font-size:86px; font-weight:900; line-height:1; text-align:center;">
+            3
+          </div>
+          <div id="countdown-subtext" style="font-size:12px; font-weight:700; color:#cbd5e1; margin-top:14px; letter-spacing:1px;">
+            GET READY...
+          </div>
+        </div>
+      </div>
+
+      <!-- Start Overlay -->
+      <div id="game-start-box" class="glass-box pop-anim">
+        <h2 style="font-family:'Outfit'; color:#0f172a; font-size:26px;">MODI JI <span style="color:#e67e22;">JUMP</span></h2>
+        <p id="start-level-info" style="margin:8px 0; color:#475569; font-size:12px; font-weight:700;">Level 1 - Target: 10</p>
+        <p style="font-size:11px; color:#64748b; margin-bottom:12px;">Tap / Click to fly, avoid bamboos & grab ₹ Rupee coins!</p>
+        <button class="game-btn" onclick="startPlay()">TAP TO START 🚀</button>
+        <button class="back-btn" style="color:#334155; margin-top:8px;" onclick="closeGameScreen()">EXIT TO MENU</button>
+      </div>
+
+      <!-- Game Over Overlay -->
+      <div id="game-over-box" class="glass-box pop-anim" style="display:none;">
+        <h1 style="font-family:'Outfit'; color:#e74c3c; font-size:32px;">OUT!</h1>
+        <p id="game-over-reason" style="font-size:11px; color:#64748b; margin-top:2px;">Crashed into bamboo obstacle!</p>
+        
+        <div class="modal-stat-box">
+          <div class="modal-stat-row">
+            <span>Score:</span>
+            <span style="color:#e67e22; font-weight:900;"><span id="final-score">0</span> / <span id="target-score">10</span></span>
+          </div>
+          <div class="modal-stat-row">
+            <span>Coins Collected:</span>
+            <span style="color:#f1c40f; font-weight:900;">🪙 +<span id="final-coins">0</span></span>
+          </div>
+          <div style="font-size:10px; color:#22c55e; font-weight:800; text-align:right; margin-top:4px;">
+            ✓ Added to Store Wallet!
+          </div>
+        </div>
+
+        <!-- =========================================================================
+             [AD SLOT 3: GAME OVER INTERSTITIAL / BANNER AD]
+             Paste your Adsterra Native banner or AdSense square ad here
+        ========================================================================= -->
+        <div style="min-height:50px; margin:8px 0; border:1px dashed #cbd5e1; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:10px; color:#64748b;" id="game-over-ad-slot">
+          <span>[Game Over Ad Slot - Adsterra Native / AdSense]</span>
+        </div>
+
+        <button class="game-btn" onclick="startPlay()">RETRY LEVEL 🔄</button>
+        <button class="back-btn" style="color:#334155; margin-top:8px;" onclick="openLevelSelectFromGame()">SELECT LEVEL</button>
+        <button class="back-btn" style="color:#64748b; margin-top:6px;" onclick="closeGameScreen()">MAIN MENU</button>
+      </div>
+
+      <!-- Level Complete Overlay -->
+      <div id="level-complete-box" class="glass-box pop-anim" style="display:none;">
+        <span style="font-size:32px;">🎉</span>
+        <h1 style="font-family:'Outfit'; color:#22c55e; font-size:26px;">LEVEL COMPLETE!</h1>
+        <p style="font-size:12px; color:#64748b; margin-top:2px;">Fantastic flying! Stage cleared!</p>
+        
+        <div class="modal-stat-box" style="background:#ecfdf5; border:1px solid #a7f3d0;">
+          <div class="modal-stat-row">
+            <span>Final Score:</span>
+            <span id="complete-score" style="color:#059669; font-weight:900;">10</span>
+          </div>
+          <div class="modal-stat-row">
+            <span>Coins Saved:</span>
+            <span style="color:#d97706; font-weight:900;">🪙 +<span id="complete-coins">0</span></span>
+          </div>
+        </div>
+
+        <button class="game-btn" style="background:linear-gradient(180deg,#10b981,#059669); box-shadow:0 4px 0 #047857;" onclick="nextLevel()">NEXT LEVEL 🚀</button>
+        <button class="back-btn" style="color:#334155; margin-top:8px;" onclick="startPlay()">RETRY</button>
+        <button class="back-btn" style="color:#64748b; margin-top:6px;" onclick="openLevelSelectFromGame()">SELECT LEVEL</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== REWARDED VIDEO AD MODAL (FOR LUCKY SPIN) ==================== -->
+<div id="adModal" class="modal">
+  <div class="glass-box" style="background:#0f172a; color:#fff; border:1px solid rgba(0,242,254,0.4);">
+    <span class="glass-pill" style="margin:0 auto 10px; font-size:10px;">REWARDED VIDEO AD</span>
+    <h3 style="font-family:'Outfit'; color:#00f2fe; font-size:20px;">Sponsor Video Ad</h3>
+    <p style="font-size:12px; margin-top:6px; opacity:0.8;">Watch this 5-second countdown to unlock your free lucky spin!</p>
+    
+    <div style="margin:18px auto; width:70px; height:70px; border-radius:50%; border:3px solid #f1c40f; display:flex; align-items:center; justify-content:center; font-family:'Outfit'; font-size:32px; font-weight:900; color:#f1c40f; background:rgba(241,196,15,0.1);">
+      <span id="ad-timer">5</span>
+    </div>
+
+    <!-- =========================================================================
+         [AD SLOT 4: REWARDED VIDEO AD / DIRECT LINK CONTAINER]
+         Paste your Adsterra Direct Link trigger or Rewarded Video Ad script here:
+    ========================================================================= -->
+    <div id="rewarded-ad-container" style="font-size:10px; color:#94a3b8; font-style:italic;">
+      <span>[Video Ad Loading Slot - Adsterra / Google AdSense]</span>
+    </div>
+
+    <p style="font-size:11px; color:#22c55e; margin-top:12px;">✓ Daily Spin begins automatically</p>
+  </div>
+</div>
+
+<script>
+// =========================================================================
+// [ADSTERRA DIRECT LINK / MONETIZATION HOOK]
+// Agar aapke paas direct link hai, toh yahan apna URL daalein:
+const ADSTERRA_DIRECT_LINK = ""; // Example: "https://www.profitablegatecpm.com/your-code"
+
+function triggerDirectLinkAd() {
+  if (ADSTERRA_DIRECT_LINK && ADSTERRA_DIRECT_LINK.length > 5) {
+    try {
+      window.open(ADSTERRA_DIRECT_LINK, '_blank');
+    } catch(e) {}
+  }
+}
+// =========================================================================
+
+// ==================== 1. 5 CHARACTER SKINS DEFINITION ====================
+const SKINS = [
+  {
+    id: "modi_ji",
+    name: "Modi Ji",
+    price: 0,
+    src: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjj_zRnZ75c3B1ronztEaYd3aG5eF-SKtk4ECUuYIuQ8tKYQdS2Z2hxRfUxCWUm4n23jMg-zlwQYFcMHFTdOEuGIxZdLWcF9LbwAoGLVedG3KOu1-sVWcZGGS0TIzxZqzWYApacu1FLQalVwIexXmDq8ALAqWo4nE8teF-VxjfxLLNJz0RZpejwkNHG5jDd/s500/1000025359.png",
+    backupSrc: "https://files.catbox.moe/2ibjka.png",
+    desc: "The visionary leader ready for records!"
+  },
+  {
+    id: "bacchan_ji",
+    name: "Bacchan ji",
+    price: 50,
+    src: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgg3AvZk60Swv3Cmv38Q52FIqmU_BN42bglNj2Bw0Nl8P9NQN4E_siza_Mf8RF-E-sduhxoZC1JRsvAwzaAx2WTyqjVNI-HsVGrcmh16e10uEh_ELnPX1fyymTB1_wn6cL7woZRQ3U0Zdgg4JG5j8FwSP2RkFNrHnDxgH1Xw3JrRTtvrYEBOvMhTyf00tnE/s1536/1000087748.png",
+    backupSrc: "",
+    desc: "Rishte mein toh hum tumhare baap lagte hain!"
+  },
+  {
+    id: "rahul_ji",
+    name: "Rahul ji",
+    price: 100,
+    src: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTycKYa6-KJ_5lv2FbaY5clS0jqQ0UjWRU1iS_bv66G9RGB-8f8hdmBH1dZD98YyoiEC1hA7yvrK7DWq2AZJYCuiL445jjiG2UxvgnTc2YB6Sz42drDBd1qZ8DV452dr-g_nv-TW3xgVtyIBmOE_Jwvo4ezYM3GvJH8qMHGUBhgpR3d5SwUVbtxUJvBZVe/s1536/1000087749.png",
+    backupSrc: "",
+    desc: "Khatakhat flying energy with agility!"
+  },
+  {
+    id: "acp_pradyuman",
+    name: "Acp ( Pradyuman)",
+    price: 200,
+    src: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhsQaONbEhtxzALQSeaQJzvKYcdC3_Tl60cvAbvOdDCyJYqjPxJWZlwpIINh9h0wFeV5xE2oIgJkw1UmKNFOE2_iOd6rRunmRl1AHFJU9gPDdlxSQw1wGejlECgpJlL91BcXr4u90EkSJHGLDELaiYWir_KasfZnWfIXzStwQF6yMQhI7jLmxAqJ28YSd2P/s1254/1000087769.png",
+    backupSrc: "",
+    desc: "Daya, darwaza tod do! Unstoppable flight!"
+  },
+  {
+    id: "yogi_ji",
+    name: "Yogi ji",
+    price: 500,
+    src: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjCtxj6p2GQOa5uRVjARnp5NbuvHcgkQrF1hmy9-dkTgvdPdUrtTpHBTZC6ovz_cht5Wm0r1qgmeLVgklrIcAKtGa4sD6uoRAgKazYCbbvqA3wi4ghS-2ASbU9y3EeXRooo4hrejF51RZwZDHaB3-g3yoGRGcfu1I59zKZa9E22Lp4u0ihD4N5kQqVPKgNj/s1024/1000087863.png",
+    backupSrc: "",
+    desc: "Bulldozer power in the sky! Ultimate champion!"
+  }
+];
+
+// Preload Images without crossOrigin to prevent CORS rejection
+const loadedSkinImages = {};
+const fallbackModiImg = new Image();
+fallbackModiImg.src = "https://files.catbox.moe/2ibjka.png";
+
+SKINS.forEach(skin => {
+  const img = new Image();
+  img.onerror = () => {
+    if (skin.backupSrc) {
+      img.src = skin.backupSrc;
+    } else if (skin.id === "modi_ji") {
+      img.src = "https://files.catbox.moe/2ibjka.png";
+    }
+  };
+  img.src = skin.src;
+  loadedSkinImages[skin.id] = img;
+});
+
+// ==================== 2. LEVEL CONFIGURATION ====================
+const LEVEL_CONFIG = [
+  { level: 1, target: 10, speed: 2.2, gap: 200, freq: 1.8 },
+  { level: 2, target: 20, speed: 2.4, gap: 190, freq: 1.7 },
+  { level: 3, target: 30, speed: 2.6, gap: 180, freq: 1.6 },
+  { level: 4, target: 45, speed: 2.9, gap: 175, freq: 1.5 },
+  { level: 5, target: 60, speed: 3.1, gap: 165, freq: 1.4 },
+  { level: 6, target: 80, speed: 3.3, gap: 160, freq: 1.35 },
+  { level: 7, target: 100, speed: 3.5, gap: 155, freq: 1.3 },
+  { level: 8, target: 125, speed: 3.7, gap: 150, freq: 1.25 },
+  { level: 9, target: 150, speed: 3.9, gap: 145, freq: 1.2 },
+  { level: 10, target: 200, speed: 4.2, gap: 140, freq: 1.1 }
+];
+
+function getLevelConfig(lvl) {
+  if (lvl <= LEVEL_CONFIG.length) return LEVEL_CONFIG[lvl - 1];
+  const extra = lvl - 10;
+  return {
+    level: lvl,
+    target: 200 + (extra * 30),
+    speed: Math.min(5.5, 4.2 + (extra * 0.15)),
+    gap: Math.max(120, 140 - (extra * 1.5)),
+    freq: Math.max(0.8, 1.1 - (extra * 0.03))
+  };
+}
+
+// ==================== 3. LOCALSTORAGE SAVE SYSTEM ====================
+let saveData = {
+  totalCoins: 0,
+  highScore: 0,
+  highScores: {},
+  unlockedLevel: 1,
+  completedLevels: [],
+  unlockedSkins: ["modi_ji"],
+  equippedSkin: "modi_ji",
+  extraLives: 0,
+  shieldActive: false
+};
+
+function loadSaveData() {
+  const local = localStorage.getItem("modi_jump_save_data");
+  if (local) {
+    try {
+      const parsed = JSON.parse(local);
+      saveData = Object.assign(saveData, parsed);
+    } catch(e) {}
+  }
+}
+
+function saveGameProgress() {
+  localStorage.setItem("modi_jump_save_data", JSON.stringify(saveData));
+  updateGlobalUI();
+}
+
+loadSaveData();
+
+function showToast(msg) {
+  const t = document.getElementById("toast-notification");
+  t.innerText = msg;
+  t.style.display = "block";
+  setTimeout(() => { t.style.display = "none"; }, 2500);
+}
+
+function updateGlobalUI() {
+  document.querySelectorAll(".global-coin-val").forEach(el => el.innerText = saveData.totalCoins);
+  document.getElementById("menu-high-score").innerText = saveData.highScore;
+  document.getElementById("menu-current-lvl").innerText = "LVL " + saveData.unlockedLevel;
+
+  const currentSkin = SKINS.find(s => s.id === saveData.equippedSkin) || SKINS[0];
+  const avatarImgEl = document.getElementById("menu-avatar-img");
+  avatarImgEl.onerror = () => {
+    avatarImgEl.src = "https://files.catbox.moe/2ibjka.png";
+  };
+  avatarImgEl.src = currentSkin.src;
+  document.getElementById("menu-avatar-name").innerText = currentSkin.name;
+  document.getElementById("menu-avatar-desc").innerText = `"${currentSkin.desc}"`;
+  
+  document.getElementById("spin-extra-lives-val").innerText = saveData.extraLives || 0;
+  document.getElementById("spin-shield-val").innerText = saveData.shieldActive ? "Active" : "None";
+}
+
+function showScreen(screenId) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById("gameScreen").style.display = "none";
+  if (screenId) {
+    document.getElementById(screenId).classList.add("active");
+  }
+  if (screenId === "screen-store") renderStoreGrid();
+  if (screenId === "screen-levels") renderLevelGrid();
+  if (screenId === "screen-spin") drawWheel(currentAngle);
+  updateGlobalUI();
+}
+
+// ==================== 4. LOADER SYSTEM ====================
+let p = 0, isLoaded = false;
+let loaderInterval = setInterval(() => {
+  p += Math.random() * 8 + 4;
+  if (p > 100) p = 100;
+  document.getElementById("load-progress-bar").style.width = p + "%";
+  document.getElementById("load-text").innerText = Math.floor(p) + "%";
+  if (p >= 100) {
+    clearInterval(loaderInterval);
+    finishLoading();
+  }
+}, 55);
+
+setTimeout(() => { if (!isLoaded) finishLoading(); }, 2500);
+
+function finishLoading() {
+  if (isLoaded) return;
+  isLoaded = true;
+  clearInterval(loaderInterval);
+  const ls = document.getElementById("loadingScreen");
+  ls.style.opacity = '0';
+  setTimeout(() => {
+    ls.style.display = "none";
+    showScreen("screen-menu");
+  }, 350);
+}
+
+// ==================== 5. ENHANCED AUDIO SYSTEM ====================
+// Web Audio API Context for zero-latency, reliable audio effects (Swoosh, Clink, Fanfare)
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) audioCtx = new AudioContextClass();
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume().catch(() => {});
+  }
+  return audioCtx;
+}
+
+const bgMusic = new Audio("https://files.catbox.moe/t829up.mp3");
+bgMusic.loop = true; bgMusic.volume = 0.35;
+const gameOverSound = new Audio("https://files.catbox.moe/omnog6.mp3");
+gameOverSound.volume = 0.6;
+let isMuted = false;
+
+function toggleAudio() {
+  isMuted = !isMuted;
+  bgMusic.muted = isMuted;
+  gameOverSound.muted = isMuted;
+  const icon = isMuted ? "🔇" : "🔊";
+  document.getElementById("audio-btn-icon").innerText = icon;
+  document.getElementById("game-audio-icon").innerText = icon;
+}
+
+// 1. Jump Swoosh Sound Effect
+function playJumpSwoosh() {
+  if (isMuted) return;
+  try {
+    const ctx = getAudioCtx();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(460, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(160, ctx.currentTime + 0.12);
+    gain.gain.setValueAtTime(0.22, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.13);
+  } catch(e) {}
+}
+
+// 2. Coin Clink Sound Effect (Crisp dual metallic chime)
+function playCoinClink() {
+  if (isMuted) return;
+  try {
+    const ctx = getAudioCtx();
+    if (!ctx) return;
+    const osc1 = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc1.type = 'sine';
+    osc2.type = 'triangle';
+    osc1.frequency.setValueAtTime(1046, ctx.currentTime); // C6
+    osc1.frequency.exponentialRampToValueAtTime(1318, ctx.currentTime + 0.1); // E6
+    osc2.frequency.setValueAtTime(2093, ctx.currentTime); // C7
+    osc2.frequency.exponentialRampToValueAtTime(2637, ctx.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.28, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(ctx.destination);
+    osc1.start();
+    osc2.start();
+    osc1.stop(ctx.currentTime + 0.23);
+    osc2.stop(ctx.currentTime + 0.23);
+  } catch(e) {}
+}
+
+// 3. Victory Fanfare Sound Effect (Triumphant multi-note celebration)
+function playVictoryFanfare() {
+  if (isMuted) return;
+  try {
+    const ctx = getAudioCtx();
+    if (!ctx) return;
+    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, High C6
+    notes.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const start = ctx.currentTime + idx * 0.12;
+      const dur = idx === notes.length - 1 ? 0.65 : 0.16;
+      osc.type = idx === notes.length - 1 ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(freq, start);
+      gain.gain.setValueAtTime(0.32, start);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + dur);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + dur + 0.05);
+    });
+  } catch(e) {}
+}
+
+// ==================== 6. CHARACTER STORE ====================
+function renderStoreGrid() {
+  const grid = document.getElementById("store-grid-container");
+  grid.innerHTML = "";
+
+  SKINS.forEach(skin => {
+    const isUnlocked = saveData.unlockedSkins.includes(skin.id);
+    const isEquipped = saveData.equippedSkin === skin.id;
+
+    const card = document.createElement("div");
+    card.className = `skin-card ${isEquipped ? 'equipped' : ''}`;
+
+    let buttonHTML = "";
+    if (isEquipped) {
+      buttonHTML = `<button class="game-btn" style="padding:6px; font-size:11px; background:#00f2fe; box-shadow:none; cursor:default;" disabled>EQUIPPED</button>`;
+    } else if (isUnlocked) {
+      buttonHTML = `<button class="game-btn secondary" style="padding:6px; font-size:11px;" onclick="equipSkin('${skin.id}')">EQUIP</button>`;
+    } else {
+      buttonHTML = `<button class="game-btn" style="padding:6px; font-size:11px;" onclick="buySkin('${skin.id}', ${skin.price})">BUY 🪙${skin.price}</button>`;
+    }
+
+    card.innerHTML = `
+      <img class="skin-img" src="${skin.src}" alt="${skin.name}" onerror="this.src='${skin.backupSrc || 'https://files.catbox.moe/2ibjka.png'}'">
+      <div class="skin-title">${skin.name}</div>
+      <div class="skin-price">${isUnlocked ? 'Unlocked' : '🪙 ' + skin.price}</div>
+      <div class="skin-desc">${skin.desc}</div>
+      ${buttonHTML}
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function buySkin(id, price) {
+  if (saveData.totalCoins >= price) {
+    saveData.totalCoins -= price;
+    saveData.unlockedSkins.push(id);
+    saveData.equippedSkin = id;
+    saveGameProgress();
+    renderStoreGrid();
+    playCoinClink();
+    showToast("🎉 Character Unlocked & Equipped!");
+  } else {
+    showToast("⚠️ Not enough coins! Collect coins in game or spin lucky wheel.");
+  }
+}
+
+function equipSkin(id) {
+  saveData.equippedSkin = id;
+  saveGameProgress();
+  renderStoreGrid();
+  playCoinClink();
+  showToast("✨ Hero Equipped!");
+}
+
+// ==================== 7. LEVEL SELECTION ====================
+function renderLevelGrid() {
+  const container = document.getElementById("level-grid-container");
+  container.innerHTML = "";
+  const totalDisplay = Math.max(12, saveData.unlockedLevel + 2);
+
+  for (let i = 1; i <= totalDisplay; i++) {
+    const isUnlocked = i <= saveData.unlockedLevel;
+    const isCompleted = saveData.completedLevels.includes(i);
+    const highScore = saveData.highScores[i] || 0;
+    const cfg = getLevelConfig(i);
+
+    const card = document.createElement("div");
+    card.className = "level-card" + (isUnlocked ? "" : " locked");
+    card.innerHTML = `
+      <div class="lvl-num">LVL ${i}</div>
+      <div class="lvl-target">Target: ${cfg.target}</div>
+      <div class="lvl-high">${isUnlocked ? 'High: ' + highScore : 'LOCKED'}</div>
+      ${isCompleted ? '<div class="lvl-badge">✓</div>' : ''}
+    `;
+    if (isUnlocked) card.onclick = () => openGameScreen(i);
+    container.appendChild(card);
+  }
+}
+
+// ==================== 8. LUCKY SPIN WHEEL ====================
+const SLOTS = [
+  { name: "20 Coins", type: "coin", val: 20, color: "#f39c12" },
+  { name: "+1 Life ❤️", type: "life", val: 1, color: "#e74c3c" },
+  { name: "50 Coins", type: "coin", val: 50, color: "#27ae60" },
+  { name: "Shield 🛡️", type: "shield", val: 1, color: "#8e44ad" },
+  { name: "10 Coins", type: "coin", val: 10, color: "#2980b9" },
+  { name: "100 Coins", type: "coin", val: 100, color: "#d35400" },
+  { name: "+1 Life ❤️", type: "life", val: 1, color: "#c0392b" },
+  { name: "30 Coins", type: "coin", val: 30, color: "#16a085" },
+  { name: "Super 150🪙", type: "coin", val: 150, color: "#9b59b6" },
+  { name: "Jackpot 200🪙", type: "coin", val: 200, color: "#f1c40f" }
+];
+
+const TODAY_KEY = new Date().toDateString();
+let spinData = JSON.parse(localStorage.getItem("modi_jump_spins")) || { date: TODAY_KEY, count: 5 };
+if (spinData.date !== TODAY_KEY) {
+  spinData = { date: TODAY_KEY, count: 5 };
+  localStorage.setItem("modi_jump_spins", JSON.stringify(spinData));
+}
+
+const wCanvas = document.getElementById("wheelCanvas");
+const wCtx = wCanvas.getContext("2d");
+let currentAngle = 0;
+let isSpinning = false;
+const numSlots = SLOTS.length;
+const arcSize = (Math.PI * 2) / numSlots;
+
+function drawWheel(angle = 0) {
+  wCtx.clearRect(0, 0, 280, 280);
+  wCtx.save();
+  wCtx.translate(140, 140);
+  wCtx.rotate(angle);
+
+  for (let i = 0; i < numSlots; i++) {
+    const startAngle = i * arcSize;
+    const endAngle = (i + 1) * arcSize;
+
+    wCtx.beginPath();
+    wCtx.moveTo(0, 0);
+    wCtx.arc(0, 0, 130, startAngle, endAngle);
+    wCtx.closePath();
+    wCtx.fillStyle = SLOTS[i].color;
+    wCtx.fill();
+    wCtx.strokeStyle = "rgba(255, 255, 255, 0.35)";
+    wCtx.lineWidth = 2.5;
+    wCtx.stroke();
+
+    wCtx.save();
+    wCtx.rotate(startAngle + arcSize / 2);
+    wCtx.textAlign = "right";
+    wCtx.fillStyle = "#ffffff";
+    wCtx.font = "bold 11px Poppins, sans-serif";
+    wCtx.shadowColor = "rgba(0, 0, 0, 0.8)";
+    wCtx.shadowBlur = 4;
+    wCtx.fillText(SLOTS[i].name, 118, 4);
+    wCtx.restore();
+  }
+  wCtx.restore();
+
+  document.getElementById("spins-left-text").innerText = `${spinData.count}/5`;
+  document.getElementById("menu-spins-val").innerText = spinData.count;
+
+  const btn = document.getElementById("spin-action-btn");
+  if (spinData.count <= 0) {
+    btn.innerText = "NO SPINS LEFT TODAY";
+    btn.disabled = true;
+  } else {
+    btn.innerText = "WATCH AD & SPIN (5s) 🎬";
+    btn.disabled = false;
+  }
+}
+
+function watchAdAndSpin() {
+  if (spinData.count <= 0 || isSpinning) return;
+
+  const adModal = document.getElementById("adModal");
+  adModal.style.display = "flex";
+  let countdown = 5;
+  document.getElementById("ad-timer").innerText = countdown;
+
+  let timer = setInterval(() => {
+    countdown--;
+    document.getElementById("ad-timer").innerText = countdown;
+    if (countdown <= 0) {
+      clearInterval(timer);
+      adModal.style.display = "none";
+      executeSpin();
+    }
+  }, 1000);
+}
+
+function executeSpin() {
+  isSpinning = true;
+  spinData.count--;
+  localStorage.setItem("modi_jump_spins", JSON.stringify(spinData));
+  drawWheel(currentAngle);
+
+  const winIndex = Math.floor(Math.random() * numSlots);
+  const extraRotations = 6;
+  const targetAngle = currentAngle + (Math.PI * 2 * extraRotations) + ((numSlots - winIndex) * arcSize) - (arcSize / 2);
+
+  let startTime = null;
+  const duration = 3800;
+
+  function animateSpin(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const easeProgress = 1 - Math.pow(1 - progress, 3);
+    const angle = currentAngle + (targetAngle - currentAngle) * easeProgress;
+
+    drawWheel(angle);
+
+    if (progress < 1) {
+      requestAnimationFrame(animateSpin);
+    } else {
+      currentAngle = targetAngle % (Math.PI * 2);
+      isSpinning = false;
+      const reward = SLOTS[winIndex];
+
+      if (reward.type === "coin") {
+        saveData.totalCoins += reward.val;
+        playCoinClink();
+        showToast(`🎉 You won ${reward.val} Coins! Added to Store.`);
+      } else if (reward.type === "life") {
+        saveData.extraLives = (saveData.extraLives || 0) + 1;
+        playCoinClink();
+        showToast("💖 Extra Heart Life Won! Applied in your next game.");
+      } else if (reward.type === "shield") {
+        saveData.shieldActive = true;
+        playCoinClink();
+        showToast("🛡️ Golden Shield Won! 1 crash immunity in your next game.");
+      }
+
+      saveGameProgress();
+    }
+  }
+
+  requestAnimationFrame(animateSpin);
+}
+
+// ==================== 9. CANVAS & WEATHER ENGINE ====================
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+const CW = 420, CH = 740;
+
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = CW * dpr;
+  canvas.height = CH * dpr;
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+resize();
+window.addEventListener("resize", resize);
+
+// Background Image Assets
+const bgDayImg = new Image();
+bgDayImg.src = "https://files.catbox.moe/x5syy5.png";
+const bgEveImg = new Image();
+bgEveImg.src = "https://files.catbox.moe/a3i120.png";
+const bgNightImg = new Image();
+bgNightImg.src = "https://files.catbox.moe/ojs4kb.jpg";
+
+// Particle Pool
+class ParticlePool {
+  constructor(max = 120) {
+    this.pool = []; this.active = [];
+    for (let i = 0; i < max; i++) {
+      this.pool.push({ x: 0, y: 0, vx: 0, vy: 0, life: 0, max: 0, size: 0, color: '#fff', alpha: 1 });
+    }
+  }
+  spawn(x, y, o) {
+    if (!this.pool.length) return;
+    const p = this.pool.pop();
+    Object.assign(p, {
+      x, y, vx: o.vx || 0, vy: o.vy || 0,
+      life: o.life || 1, max: o.life || 1,
+      size: o.size || 3, color: o.color || "#fff", alpha: 1
+    });
+    this.active.push(p);
+  }
+  update(dt) {
+    for (let i = this.active.length - 1; i >= 0; i--) {
+      const p = this.active[i];
+      p.x += p.vx * dt * 60; p.y += p.vy * dt * 60;
+      p.vy += 0.14 * dt * 60; p.life -= dt;
+      p.alpha = Math.max(0, p.life / p.max);
+      if (p.life < 0) this.pool.push(this.active.splice(i, 1)[0]);
+    }
+  }
+  draw() {
+    for (const p of this.active) {
+      ctx.save(); ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
+  }
+}
+const particles = new ParticlePool();
+
+// Weather Cycle
+class BackgroundSystem {
+  constructor() {
+    this.timer = 0;
+    this.stateIndex = 0;
+    this.states = ["DAY", "EVENING", "NIGHT", "RAIN"];
+    this.durationPerState = 14;
+    this.rainDrops = Array.from({ length: 70 }, () => ({
+      x: Math.random() * (CW + 100) - 50,
+      y: Math.random() * CH,
+      l: 12 + Math.random() * 18,
+      speed: 12 + Math.random() * 10,
+      op: 0.3 + Math.random() * 0.5
+    }));
+    this.rainOpacity = 0;
+  }
+  update(dt, isPlaying) {
+    if (isPlaying) {
+      this.timer += dt;
+      if (this.timer > this.durationPerState) {
+        this.timer = 0;
+        this.stateIndex = (this.stateIndex + 1) % this.states.length;
+        document.getElementById("weather-label").innerText = this.states[this.stateIndex];
+      }
+    }
+    if (this.stateIndex === 3) {
+      this.rainOpacity = Math.min(1, this.rainOpacity + dt * 0.8);
+    } else {
+      this.rainOpacity = Math.max(0, this.rainOpacity - dt * 0.8);
+    }
+    if (this.rainOpacity > 0) {
+      this.rainDrops.forEach(r => {
+        r.y += r.speed * dt * 60; r.x -= 2.6 * dt * 60;
+        if (r.y > CH) { r.y = -20; r.x = Math.random() * (CW + 100) - 50; }
+      });
+    }
+  }
+  drawCoverImage(img, alpha = 1) {
+    if (!img.complete || img.naturalWidth === 0 || alpha <= 0.01) return;
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
+    const imgRatio = img.naturalWidth / img.naturalHeight;
+    const canvasRatio = CW / CH;
+    let renderW, renderH, offsetX, offsetY;
+    if (imgRatio > canvasRatio) {
+      renderH = CH; renderW = CH * imgRatio;
+      offsetX = (CW - renderW) / 2; offsetY = 0;
+    } else {
+      renderW = CW; renderH = CW / imgRatio;
+      offsetX = 0; offsetY = (CH - renderH) / 2;
+    }
+    ctx.drawImage(img, offsetX, offsetY, renderW, renderH);
+    ctx.restore();
+  }
+  draw() {
+    let grad = ctx.createLinearGradient(0, 0, 0, CH);
+    if (this.stateIndex === 0) {
+      grad.addColorStop(0, "#08101e"); grad.addColorStop(0.5, "#101b2b"); grad.addColorStop(1, "#080c14");
+    } else if (this.stateIndex === 1) {
+      grad.addColorStop(0, "#190a1d"); grad.addColorStop(0.5, "#2d1222"); grad.addColorStop(1, "#0a060d");
+    } else {
+      grad.addColorStop(0, "#02040a"); grad.addColorStop(0.6, "#080e1a"); grad.addColorStop(1, "#020408");
+    }
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, CW, CH);
+
+    const progress = this.timer / this.durationPerState;
+    if (this.stateIndex === 0) {
+      this.drawCoverImage(bgDayImg, 1);
+    } else if (this.stateIndex === 1) {
+      this.drawCoverImage(bgDayImg, 1 - progress);
+      this.drawCoverImage(bgEveImg, progress);
+    } else if (this.stateIndex === 2) {
+      this.drawCoverImage(bgEveImg, 1 - progress);
+      this.drawCoverImage(bgNightImg, progress);
+    } else if (this.stateIndex === 3) {
+      this.drawCoverImage(bgNightImg, 1);
+    }
+
+    if (this.rainOpacity > 0) {
+      ctx.save();
+      ctx.strokeStyle = "rgba(210, 230, 255, 0.65)"; ctx.lineWidth = 1.4; ctx.lineCap = "round";
+      this.rainDrops.forEach(r => {
+        ctx.globalAlpha = r.op * this.rainOpacity;
+        ctx.beginPath(); ctx.moveTo(r.x, r.y); ctx.lineTo(r.x - 4, r.y + r.l); ctx.stroke();
+      });
+      ctx.restore();
+    }
+  }
+}
+const bgSystem = new BackgroundSystem();
+
+// Bamboo Obstacle
+class BambooPipe {
+  constructor(gapSize) {
+    this.x = CW;
+    this.y = Math.random() * (CH - gapSize - 220) + 110;
+    this.gap = gapSize;
+    this.passed = false;
+  }
+  draw() {
+    this.renderPipe(this.y, true);
+    this.renderPipe(CH - (this.y + this.gap), false);
+  }
+  renderPipe(h, isTop) {
+    const pipeWidth = 76;
+    let y = isTop ? 0 : this.y + this.gap;
+    ctx.save();
+    let g = ctx.createLinearGradient(this.x, 0, this.x + pipeWidth, 0);
+    g.addColorStop(0, "#3f2a12"); g.addColorStop(0.2, "#8d6a35");
+    g.addColorStop(0.5, "#f2d78e"); g.addColorStop(0.85, "#7a5a2e"); g.addColorStop(1, "#3f2a12");
+    ctx.fillStyle = g;
+    ctx.fillRect(this.x, y, pipeWidth, h);
+
+    ctx.strokeStyle = "rgba(45,28,10,0.6)"; ctx.lineWidth = 2;
+    for (let ry = y + 25; ry < y + h; ry += 45) {
+      ctx.beginPath(); ctx.moveTo(this.x, ry); ctx.lineTo(this.x + pipeWidth, ry); ctx.stroke();
+    }
+
+    let capY = isTop ? y + h - 22 : y;
+    let capG = ctx.createLinearGradient(this.x - 8, capY, this.x + pipeWidth + 8, capY + 22);
+    capG.addColorStop(0, "#432108"); capG.addColorStop(0.5, "#f1d58b"); capG.addColorStop(1, "#3d2810");
+    ctx.fillStyle = capG; ctx.fillRect(this.x - 8, capY, pipeWidth + 16, 22);
+    ctx.strokeStyle = "#2a1c0c"; ctx.lineWidth = 2; ctx.strokeRect(this.x - 8, capY, pipeWidth + 16, 22);
+
+    ctx.fillStyle = "#22c55e";
+    ctx.beginPath(); ctx.ellipse(this.x + 2, capY + 11, 7, 3.5, 0.6, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(this.x + pipeWidth - 2, capY + 11, 7, 3.5, -0.6, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+}
+
+// ==================== 10. GAMEPLAY RUNTIME & CHARACTER DRAW ====================
+let currentLevel = 1;
+let currentConfig = getLevelConfig(1);
+let pipes = [], coins = { list: [], collected: 0 };
+let pipeTimer = 0, score = 0, gameState = "STOPPED";
+let last = 0, shake = 0, slow = 1, flash = 0;
+let inGameLives = 3;
+let hasShield = false;
+
+let bird = {
+  x: 70, y: 260, w: 66, h: 66, vy: 0, g: 0.26, jump: 5.4, rot: 0, tRot: 0, wing: 0, idle: 0,
+  draw() {
+    ctx.save();
+    let heroImg = loadedSkinImages[saveData.equippedSkin] || loadedSkinImages["modi_ji"];
+    
+    let imgToDraw = null;
+    if (heroImg && heroImg.complete && heroImg.naturalWidth > 0) {
+      imgToDraw = heroImg;
+    } else if (fallbackModiImg.complete && fallbackModiImg.naturalWidth > 0) {
+      imgToDraw = fallbackModiImg;
+    }
+
+    if (imgToDraw) {
+      let ratio = imgToDraw.naturalWidth / imgToDraw.naturalHeight;
+      this.h = this.w / ratio;
+    }
+
+    this.rot += (this.tRot - this.rot) * 0.18;
+    this.wing += 0.35 + Math.abs(this.vy) * 0.06;
+    this.idle += 0.016;
+    let bob = (gameState === "PLAYING") ? 0 : Math.sin(this.idle * 2.5) * 2.5;
+    let sc = 1 + Math.sin(this.wing) * 0.07;
+    ctx.translate(this.x + this.w / 2, this.y + this.h / 2 + bob);
+    ctx.rotate(this.rot);
+    ctx.scale(sc, 1);
+    ctx.shadowColor = "#00f2fe"; ctx.shadowBlur = 14;
+    
+    if (imgToDraw) {
+      ctx.drawImage(imgToDraw, -this.w / 2, -this.h / 2, this.w, this.h);
+    } else {
+      // Procedural Cartoon Avatar Fallback
+      ctx.save();
+      ctx.fillStyle = "#f97316";
+      ctx.beginPath();
+      ctx.arc(0, 8, 22, 0, Math.PI, false);
+      ctx.fill();
+      ctx.fillStyle = "#ffedd5";
+      ctx.beginPath();
+      ctx.arc(0, -6, 18, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#f8fafc";
+      ctx.beginPath();
+      ctx.arc(0, 0, 14, 0, Math.PI);
+      ctx.fill();
+      ctx.strokeStyle = "#0284c7";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.arc(-6, -8, 5, 0, Math.PI * 2);
+      ctx.arc(6, -8, 5, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    if (hasShield) {
+      ctx.strokeStyle = "rgba(168, 85, 247, 0.85)";
+      ctx.lineWidth = 3.5;
+      ctx.shadowColor = "#a855f7";
+      ctx.shadowBlur = 16;
+      ctx.beginPath();
+      ctx.arc(0, 0, this.w / 2 + 10, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  },
+  update(dt) {
+    if (gameState !== "PLAYING") return;
+    this.vy += this.g * dt * 60;
+    this.y += this.vy * dt * 60;
+    this.tRot = this.vy * 0.07;
+    if (this.y + this.h > CH - 25 || this.y <= 0) triggerGameOver("Touched the boundary zone!");
+  },
+  flap() {
+    if (gameState !== "PLAYING") return;
+    this.vy = -this.jump;
+    this.tRot = -0.55;
+    playJumpSwoosh(); // Swoosh audio on jump!
+    for (let i = 0; i < 6; i++) {
+      particles.spawn(this.x + 20, this.y + this.h * 0.65, {
+        vx: (Math.random() - 0.5) * 3, vy: 1.2 + Math.random() * 2,
+        life: 0.45, size: 2.5, color: "#bae6fd"
+      });
+    }
+  },
+  reset() {
+    this.y = 260; this.vy = 0; this.rot = 0; this.tRot = 0;
+  }
+};
+
+function openGameScreen(lvl = 1) {
+  currentLevel = lvl;
+  currentConfig = getLevelConfig(currentLevel);
+  
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById("gameScreen").style.display = "flex";
+  
+  document.getElementById("hud-level-title").innerText = "LVL " + currentLevel;
+  document.getElementById("start-level-info").innerText = "Level " + currentLevel + " - Target: " + currentConfig.target;
+  
+  inGameLives = 3 + (saveData.extraLives > 0 ? 1 : 0);
+  hasShield = saveData.shieldActive;
+  document.getElementById("hud-lives-count").innerText = inGameLives;
+
+  gameState = "START";
+  document.getElementById("game-start-box").style.display = "block";
+  document.getElementById("level-countdown-overlay").style.display = "none";
+  document.getElementById("game-over-box").style.display = "none";
+  document.getElementById("level-complete-box").style.display = "none";
+  updateHUDScore();
+}
+
+function closeGameScreen() {
+  document.getElementById("gameScreen").style.display = "none";
+  showScreen("screen-menu");
+  gameState = "STOPPED";
+  bgMusic.pause();
+}
+
+function openLevelSelectFromGame() {
+  document.getElementById("gameScreen").style.display = "none";
+  showScreen("screen-levels");
+  gameState = "STOPPED";
+  bgMusic.pause();
+}
+
+function updateHUDScore() {
+  document.getElementById("score-board").innerText = "SCORE: " + score + " / " + currentConfig.target;
+  const progressPercent = Math.min(100, (score / currentConfig.target) * 100);
+  document.getElementById("hud-progress-bar").style.width = progressPercent + "%";
+}
+
+function startPlay() {
+  score = 0; pipeTimer = 0;
+  bird.reset(); pipes = []; coins.list = []; coins.collected = 0;
+  document.getElementById("hud-coin-count").innerText = 0;
+  
+  inGameLives = 3 + (saveData.extraLives > 0 ? 1 : 0);
+  hasShield = saveData.shieldActive;
+  document.getElementById("hud-lives-count").innerText = inGameLives;
+
+  if (saveData.extraLives > 0 || saveData.shieldActive) {
+    saveData.extraLives = Math.max(0, (saveData.extraLives || 0) - 1);
+    saveData.shieldActive = false;
+    saveGameProgress();
+  }
+
+  updateHUDScore();
+  
+  document.getElementById("game-start-box").style.display = "none";
+  document.getElementById("game-over-box").style.display = "none";
+  document.getElementById("level-complete-box").style.display = "none";
+  
+  // ANIMATED 3-2-1-GO COUNTDOWN
+  const cdOverlay = document.getElementById("level-countdown-overlay");
+  const cdNum = document.getElementById("countdown-number");
+  const cdSub = document.getElementById("countdown-subtext");
+  const cdBadge = document.getElementById("countdown-lvl-badge");
+  
+  cdBadge.innerText = "LEVEL " + currentLevel + " STARTING";
+  cdOverlay.style.display = "flex";
+  
+  function setTick(val, color, sub) {
+    cdNum.classList.remove("pop-anim");
+    void cdNum.offsetWidth;
+    cdNum.classList.add("pop-anim");
+    cdNum.innerText = val;
+    cdNum.style.color = color;
+    cdNum.style.textShadow = `0 0 35px ${color}`;
+    cdSub.innerText = sub;
+    playCoinClink();
+  }
+
+  setTick("3", "#f59e0b", "GET READY...");
+
+  setTimeout(() => setTick("2", "#00f2fe", "STEADY..."), 650);
+  setTimeout(() => setTick("1", "#22c55e", "ALMOST THERE..."), 1300);
+  setTimeout(() => setTick("GO!", "#facc15", "FLAP YOUR WINGS!"), 1950);
+
+  setTimeout(() => {
+    cdOverlay.style.display = "none";
+    gameState = "PLAYING";
+    pipeTimer = 0;
+    if (!isMuted) {
+      bgMusic.currentTime = 0;
+      bgMusic.play().catch(() => {});
+    }
+    last = performance.now();
+  }, 2550);
+}
+
+function triggerGameOver(reason = "Crashed into bamboo obstacle!") {
+  if (gameState === "GAMEOVER") return;
+  gameState = "GAMEOVER";
+  shake = 16; flash = 0.8; slow = 0.25;
+  bgMusic.pause();
+  if (!isMuted) {
+    gameOverSound.currentTime = 0; gameOverSound.play().catch(() => {});
+  }
+
+  if (!saveData.highScores[currentLevel] || score > saveData.highScores[currentLevel]) {
+    saveData.highScores[currentLevel] = score;
+  }
+  if (score > saveData.highScore) {
+    saveData.highScore = score;
+  }
+  saveGameProgress();
+  
+  document.getElementById("game-over-reason").innerText = reason;
+  document.getElementById("final-score").innerText = score;
+  document.getElementById("target-score").innerText = currentConfig.target;
+  document.getElementById("final-coins").innerText = coins.collected;
+  document.getElementById("game-over-box").style.display = "block";
+  setTimeout(() => slow = 1, 550);
+}
+
+function triggerLevelComplete() {
+  if (gameState === "LEVEL_COMPLETE") return;
+  gameState = "LEVEL_COMPLETE";
+  bgMusic.pause();
+  playVictoryFanfare(); // Victory fanfare audio!
+
+  if (!saveData.completedLevels.includes(currentLevel)) {
+    saveData.completedLevels.push(currentLevel);
+  }
+  if (saveData.unlockedLevel <= currentLevel) {
+    saveData.unlockedLevel = currentLevel + 1;
+  }
+  if (!saveData.highScores[currentLevel] || score > saveData.highScores[currentLevel]) {
+    saveData.highScores[currentLevel] = score;
+  }
+  if (score > saveData.highScore) {
+    saveData.highScore = score;
+  }
+  saveGameProgress();
+  
+  document.getElementById("complete-score").innerText = score;
+  document.getElementById("complete-coins").innerText = coins.collected;
+  document.getElementById("level-complete-box").style.display = "block";
+}
+
+function nextLevel() {
+  currentLevel++;
+  openGameScreen(currentLevel);
+  startPlay();
+}
+
+// Input Handlers
+window.addEventListener("touchstart", (e) => {
+  if (gameState === "PLAYING" && e.target.tagName === "CANVAS") {
+    e.preventDefault();
+    bird.flap();
+  }
+}, { passive: false });
+
+window.addEventListener("mousedown", (e) => {
+  if (gameState === "PLAYING" && e.target.tagName === "CANVAS") {
+    bird.flap();
+  }
+});
+
+// ==================== 11. MAIN ENGINE LOOP ====================
+function loop(now) {
+  let dt = Math.min((now - last) / 1000, 0.033);
+  last = now;
+  dt *= slow;
+  if (gameState === "STOPPED") dt = 0.016;
+
+  ctx.save();
+  if (shake > 0) {
+    ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
+    shake *= 0.88;
+    if (shake < 0.4) shake = 0;
+  }
+
+  bgSystem.update(dt, gameState === "PLAYING");
+  bgSystem.draw();
+
+  if (gameState === "PLAYING") {
+    pipeTimer += dt;
+    if (pipeTimer > currentConfig.freq) {
+      pipes.push(new BambooPipe(currentConfig.gap));
+      if (Math.random() < 0.85) {
+        coins.list.push({
+          x: CW + 25,
+          y: pipes[pipes.length - 1].y + currentConfig.gap / 2,
+          ph: Math.random() * 6.28
+        });
+      }
+      pipeTimer = 0;
+    }
+  }
+
+  // Draw & Update Pipes
+  for (let i = pipes.length - 1; i >= 0; i--) {
+    let p = pipes[i];
+    if (gameState === "PLAYING") p.x -= currentConfig.speed * dt * 60;
+    p.draw();
+
+    if (gameState === "PLAYING") {
+      const hitPadding = 12;
+      if (
+        bird.x + bird.w - hitPadding > p.x &&
+        bird.x + hitPadding < p.x + 76 &&
+        (bird.y + hitPadding < p.y || bird.y + bird.h - hitPadding > p.y + p.gap)
+      ) {
+        if (hasShield) {
+          hasShield = false;
+          shake = 10; flash = 0.5;
+          showToast("🛡️ Shield Absorbed the Bamboo Crash!");
+          p.x = -120;
+        } else {
+          inGameLives--;
+          document.getElementById("hud-lives-count").innerText = inGameLives;
+          if (inGameLives > 0) {
+            shake = 10;
+            bird.y = 260;
+            bird.vy = 0;
+            showToast(`💔 Remaining Lives: ${inGameLives}`);
+            p.x = -120;
+          } else {
+            triggerGameOver("Crashed into a bamboo obstacle!");
+            break;
+          }
+        }
+      }
+
+      if (p.x + 76 < bird.x && !p.passed) {
+        p.passed = true;
+        score++;
+        updateHUDScore();
+        const sb = document.getElementById("score-board");
+        sb.classList.remove("pop");
+        void sb.offsetWidth;
+        sb.classList.add("pop");
+
+        if (score >= currentConfig.target) {
+          triggerLevelComplete();
+          break;
+        }
+      }
+    }
+
+    if (p.x < -100) pipes.splice(i, 1);
+  }
+
+  // Draw & Update Coins
+  for (let i = coins.list.length - 1; i >= 0; i--) {
+    let c = coins.list[i];
+    if (gameState === "PLAYING") {
+      c.x -= currentConfig.speed * dt * 60;
+      c.ph += dt * 5;
+    }
+
+    ctx.save();
+    ctx.translate(c.x + 13, c.y + 13);
+    ctx.rotate(Math.sin(c.ph) * 0.16);
+
+    let gg = ctx.createRadialGradient(0, 0, 2, 0, 0, 14);
+    gg.addColorStop(0, "#fffde7"); gg.addColorStop(0.4, "#f1c40f"); gg.addColorStop(1, "#b45309");
+    ctx.fillStyle = gg; ctx.shadowColor = "#f1c40f"; ctx.shadowBlur = 10;
+    ctx.beginPath(); ctx.arc(0, 0, 13, 0, Math.PI * 2); ctx.fill();
+
+    ctx.shadowBlur = 0; ctx.fillStyle = "#78350f"; ctx.font = "bold 13px Poppins, sans-serif";
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText("₹", 0, 1);
+    ctx.restore();
+
+    // COIN COLLECTION LOGIC: Adds directly to user's wallet for Character Store!
+    if (gameState === "PLAYING" && bird.x < c.x + 26 && bird.x + bird.w > c.x && bird.y < c.y + 26 && bird.y + bird.h > c.y) {
+      coins.collected++;
+      saveData.totalCoins++; // STORE WALLET MEIN TURANT ADD HO RAHA HAI!
+      saveGameProgress();
+
+      document.getElementById("hud-coin-count").innerText = coins.collected;
+      playCoinClink(); // Clink audio on coin collect!
+
+      for (let k = 0; k < 10; k++) {
+        particles.spawn(c.x + 13, c.y + 13, {
+          vx: (Math.random() - 0.5) * 5, vy: (Math.random() - 0.5) * 5,
+          life: 0.55, size: 2.5 + Math.random() * 2, color: "#f1c40f"
+        });
+      }
+      coins.list.splice(i, 1);
+    } else if (c.x < -30) {
+      coins.list.splice(i, 1);
+    }
+  }
+
+  bird.draw();
+  bird.update(dt);
+
+  particles.update(dt);
+  particles.draw();
+
+  if (flash > 0) {
+    ctx.fillStyle = `rgba(255,255,255,${flash})`;
+    ctx.fillRect(0, 0, CW, CH);
+    flash -= dt * 2.5;
+  }
+
+  ctx.restore();
+  requestAnimationFrame(loop);
+}
+
+requestAnimationFrame(loop);
+updateGlobalUI();
+</script>
+</body>
+</html>
